@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:s="http://goodiemania.org/andromeda/taglib"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/_base.xhtml">
+
+    <ui:define name="title">Login</ui:define>
+
+    <ui:define name="additionalCSS">
+        <h:outputStylesheet library="css" name="login.css"/>
+    </ui:define>
+
+    <ui:define name="body">
+        <s:form styleClass="container-fluid fixed-top">
+            <s:row>
+                <ui:repeat value="#{indexController.statusList}" var="status">
+                <s:card styleClass="col-xl-2 p-0"
+                        cardStyleClass="card shadow mb-4 p-1 m-1 #{status.systemStatus.cardStyleClass}"
+                        cardHeader="#{status.name}">
+                    <a href="#" class="btn btn-block stretched-link #{status.systemStatus.buttonStyleClass}">View details</a>
+                </s:card>
+                </ui:repeat>
+            </s:row>
+        </s:form>
+
+        <f:websocket channel="helloChannel" onmessage="onMessage"/>
+    </ui:define>
+</ui:composition>
