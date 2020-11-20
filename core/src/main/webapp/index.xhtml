@@ -8,22 +8,31 @@
     <ui:define name="title">Login</ui:define>
 
     <ui:define name="additionalCSS">
-        <h:outputStylesheet library="css" name="login.css"/>
+        <h:outputStylesheet library="css" name="main.css"/>
     </ui:define>
 
     <ui:define name="body">
-        <s:form styleClass="container-fluid fixed-top">
-            <s:row>
-                <ui:repeat value="#{indexController.statusList}" var="status">
-                <s:card styleClass="col-xl-2 p-0"
-                        cardStyleClass="card shadow mb-4 p-1 m-1 #{status.systemStatus.cardStyleClass}"
-                        cardHeader="#{status.name}">
-                    <a href="#" class="btn btn-block stretched-link #{status.systemStatus.buttonStyleClass}">View details</a>
-                </s:card>
-                </ui:repeat>
-            </s:row>
-        </s:form>
+        <s:form styleClass="gap-4 grid grid-cols-5 auto-rows-auto absolute top-4 left-4 right-4">
+            <ui:repeat value="#{indexController.statusList}" var="status" varStatus="i">
+                <div class="relative max-w-sm rounded #{status.systemStatus.cardStyleClass}">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">
+                            <a href="#" class="stretched-link">
+                                (#{i.index}) #{status.name}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="px-6 pt-4 pb-2">
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+                    </div>
+                </div>
+            </ui:repeat>
 
-        <f:websocket channel="helloChannel" onmessage="onMessage"/>
+            <f:websocket channel="helloChannel" scope="application">
+                <f:ajax render="@form" event="update"/>
+            </f:websocket>
+        </s:form>
     </ui:define>
 </ui:composition>

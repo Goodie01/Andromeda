@@ -1,11 +1,11 @@
 package org.goodiemania.andromeda.domain;
 
 public enum SystemStatus {
-    OK("bg-success", "btn-outline-success"),
-    CHECKING("bg-secondary", "btn-outline-secondary"),
-    WARNING("bg-warning", "btn-outline-warning"),
-    DANGER("bg-danger", "btn-outline-danger"),
-    START_UP("bg-primary", "btn-outline-primary");
+    OK("bg-green-300 hover:bg-green-700", "btn-outline-success"),
+    CHECKING("bg-blue-300 hover:bg-blue-700", "btn-outline-secondary"),
+    WARNING("bg-yellow-300 hover:bg-yellow-700", "btn-outline-warning"),
+    DANGER("bg-red-300 hover:bg-red-700", "btn-outline-danger"),
+    START_UP("bg-purple-300 hover:bg-purple-700", "btn-outline-primary");
 
     private final String cardStyleClass;
     private final String buttonStyleClass;

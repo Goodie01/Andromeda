@@ -3,7 +3,9 @@ package org.goodiemania.andromeda;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -23,26 +25,27 @@ public class IndexController {
     @Push
     PushContext helloChannel;
 
-    private List<DisplayedStatus> statusList;
+    private Map<String, DisplayedStatus> statusList;
 
     @PostConstruct
     public void init() {
         Lorem lorem = LoremIpsum.getInstance();
-        statusList = new ArrayList<>();
-
-        for(int i = 0; i < 20; i++) {
-            final DisplayedStatus status = new DisplayedStatus();
-            status.setName(lorem.getTitle(1,3));
-            status.setSystemStatus(SystemStatus.OK);
-            statusList.add(status);
-        }
+        statusList = new HashMap<>();
     }
 
     public List<DisplayedStatus> getStatusList() {
-        return statusList;
+        return List.copyOf(statusList.values());
     }
 
-    public void setStatusList(final List<DisplayedStatus> statusList) {
-        this.statusList = statusList;
+    public void updateStatus(final String name, final SystemStatus ok) {
+        DisplayedStatus displayedStatus = statusList.get(name);
+        if(displayedStatus == null) {
+            displayedStatus = new DisplayedStatus();
+            displayedStatus.setName(name);
+            statusList.put(name, displayedStatus);
+        }
+
+        displayedStatus.setSystemStatus(ok);
+        helloChannel.send("update");
     }
 }
